@@ -19,28 +19,28 @@ body {
   display: block;
   margin: 20px 0;
 }
-.menu {
+nav {
   display: block;
   margin: 30px 0;
 }
 
-.menu ul {
+nav ul {
   display: flex;
   width: 100%;
   justify-content: center;
 }
-.menu ul li {
+nav ul li {
   padding: 0 40px;
 }
-.menu ul li a {
+nav ul li a {
   display: block;
   font-size: 24px;
 }
-.menu ul li a:hover {
+nav ul li a:hover {
   color: #999;
 }
 
-.article {
+article {
   display: block;
   margin-top: 50px;
 }
