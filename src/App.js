@@ -3,22 +3,10 @@ import './App.css';
 
 class Nav extends Component {
 
-  state = {
-    list: []
-  }
-
-  componentDidMount(){
-    fetch('list.json').then(function(result){
-      return result.json();
-    }).then(function(json){
-      this.setState({list:json})
-    }.bind(this))
-  }
-
   render(){
     var listTag = [];
-    for (var i = 0; i < this.state.list.length; i++){
-      var li = this.state.list[i];
+    for (var i = 0; i < this.props.list.length; i++){
+      var li = this.props.list[i];
       listTag.push(
       <li key={li.id}>
         <a href={li.id} data-id={li.id} onClick={ (e) => {
@@ -54,14 +42,22 @@ class Article extends Component {
 
  class App extends Component {
   state = {
-    article: {title: 'Welcome', desc: 'Hello, React & Ajax'}
+    article: {title: 'Welcome', desc: 'Hello, React & Ajax'},
+    list: {}
+  }
+  componentDidMount(){
+    fetch('list.json').then(function(result){
+      return result.json();
+    }).then(function(json){
+      this.setState({list:json})
+    }.bind(this))
   }
   render(){
     return (
       <div className="App">
         <h1 className="header">WEB</h1>
 
-        <Nav onClick={ (id) => {
+        <Nav list={this.state.list} onClick={ (id) => {
           fetch(id+'.json')
           .then(function(result){
             return result.json();
