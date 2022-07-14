@@ -11,7 +11,6 @@ class Nav extends Component {
     fetch('list.json').then(function(result){
       return result.json();
     }).then(function(json){
-      console.log(json);
       this.setState({list:json})
     }.bind(this))
   }
@@ -20,32 +19,56 @@ class Nav extends Component {
     var listTag = [];
     for (var i = 0; i < this.state.list.length; i++){
       var li = this.state.list[i];
-      listTag.push(<li key={li.id}><a href={li.id}>{li.title}</a></li>)
+      listTag.push(
+      <li key={li.id}>
+        <a href={li.id} data-id={li.id} onClick={ (e) => {
+          e.preventDefault();
+          console.log('Trigger');
+          this.props.onClick(e.target.dataset.id)
+        }}>
+          {li.title}
+        </a>
+      </li>)
     }
+
     return (
       <nav>
         <ul>
-          <li><a href="1">HTML</a></li>
-          <li><a href="2">CSS</a></li>
-          <li><a href="3">JS</a></li>
+          {listTag}
         </ul>
       </nav>
     )
   }
 }
 
-function App() {
-  return (
-    <div className="App">
-      <h1 className="header">WEB</h1>
-
-      <Nav></Nav>
-
+class Article extends Component {
+  render(){
+    return (
       <article className="article">
-        <h2>Welcome, React &amp; Ajax</h2>
+        <h2>{this.props.title}</h2>
+        <p>{this.props.desc}</p>
       </article>
-    </div>
-  );
+    )
+  }
+}
+
+ class App extends Component {
+  state = {
+    article: {title: 'Welcome', desc: 'Hello, React & Ajax'}
+  }
+  render(){
+    return (
+      <div className="App">
+        <h1 className="header">WEB</h1>
+
+        <Nav onClick={ (id) => {
+          console.log(id);
+        }}></Nav>
+        <Article title={this.state.article.title} desc={this.state.article.desc}></Article>
+
+      </div>
+    );
+  }
 }
 
 export default App;
